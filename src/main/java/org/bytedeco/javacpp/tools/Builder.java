@@ -370,7 +370,13 @@ public class Builder {
                 logger.info("Compiling " + libraryFilename);
                 int exitValue = compile(sourceFilename, libraryFilename, p);
                 if (exitValue == 0) {
-                    new File(sourceFilename).delete();
+                    String keepCppFiles = p.getProperty("keepCppFiles");
+                    if (!"true".equals(keepCppFiles)) {
+                        logger.info("Deleting " + sourceFilename);
+                        new File(sourceFilename).delete();
+                    } else {
+                        logger.info("Keeping " + sourceFilename);
+                    }
                     outputFile = new File(libraryFilename);
                 } else {
                     System.exit(exitValue);
