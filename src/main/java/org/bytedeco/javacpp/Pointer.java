@@ -120,7 +120,7 @@ public class Pointer implements AutoCloseable {
     }
 
     /** The interface to implement to produce a Deallocator usable by Pointer. */
-    protected interface Deallocator {
+    public interface Deallocator {
         void deallocate();
     }
 
