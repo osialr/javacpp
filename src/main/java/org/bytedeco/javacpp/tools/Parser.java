@@ -932,13 +932,15 @@ public class Parser {
             } else if (dcl.indirections == 2 && !dcl.reference && infoNumber >= 0) {
                 type.annotations += "@ByPtrPtr ";
                 needCast |= type.cppName.equals("void");
-            } else if (dcl.indirections >= 2) {
+            } else if (dcl.indirections == 2) {
                 dcl.infoNumber += infoLength;
                 needCast = true;
                 type.javaName = "PointerPointer";
                 if (dcl.reference) {
                     type.annotations += "@ByRef ";
                 }
+            } else if (dcl.indirections > 2) {
+                throw new RuntimeException("Cannot process triple pointers (ptr***)");
             }
 
             if (!needCast && !type.javaName.contains("@Cast")) {
